@@ -13,12 +13,12 @@ static void sum_vectors(double sum_of_vectors, const std::vector<int> new_vector
 int main(int argc, char** argv)
 {
 	std::cout << "Hardware cores:\t" << std::thread::hardware_concurrency() << std::endl;
-	std::cout << std::setw(12) << "\t\t10^3\t\t10^4\t\t 10^5\t\t10^6" << std::endl;
+	std::cout << std::setw(12) << "\t\t\t10^3\t\t10^4\t\t10^5\t\t10^6" << std::endl;
 	std::vector<int> vector1;
 	std::vector<int> vector2;
 	std::vector<int> cnt_of_threads{ 1, 2, 4, 8, 16 };
 	std::vector<int> size_of_vector{ 1000, 10000, 100000, 1'000'000 };
-
+	
 	for (auto &count_of_threads : cnt_of_threads)
 	{
 		if (count_of_threads == 1)
@@ -47,13 +47,13 @@ int main(int argc, char** argv)
 					right_border = part_of_the_size * (i + 1);
 				else
 					right_border = count_vector;
-
+				
 				for (int j = part_of_the_size * i; j < right_border; ++j)
 				{
 					new_vector1.push_back(vector1.at(j));
 					new_vector2.push_back(vector2.at(j));
 				}
-				threads.push_back(std::thread(sum_of_vectors, std::ref(sum_of_vectors), new_vector1, new_vector2));
+				threads.push_back(std::thread(sum_vectors, std::ref(sum_of_vectors), new_vector1, new_vector2));
 			}
 
 			for (auto& it : threads)
